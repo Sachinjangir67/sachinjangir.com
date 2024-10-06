@@ -164,18 +164,24 @@
      <!-- Contact section design -->
       <section class="contact" id="contact">
         <h2 class="heading">Contact <span>Me</span></h2>
-        <form action="https://formspree.io/f/moqggedd" method="POST">
+         <form action="https://api.web3forms.com/submit"
+        method="POST"
+        >
+          <input type="hidden"
+          name="access_key"
+          value="a540a870-41fe-4f73-981f-b9d3b3f0f169"
+          />
             <div class="input-box">
-                <input type="text" placeholder="Full Name" id="name" required autocomplete="off">
-                <input type="email" placeholder="Email Address" id="email" required  autocomplete="off">
+                <input type="text" name="name" placeholder="Full Name" id="name" required autocomplete="off">
+                <input type="email" name="email" placeholder="Email Address" id="email" required  autocomplete="off">
             </div>
             <div class="input-box">
-                <input type="number" placeholder="Mobile Number" id="phone" required autocomplete="off">
-                <input type="text" placeholder="Email Subject" id="subject" autocomplete="off">
+                <input type="number" name="number" placeholder="Mobile Number" id="phone" required autocomplete="off">
+                <input type="text" name="Email Subject" placeholder="Email Subject" id="subject" autocomplete="off">
             </div>
-            <textarea name="" id="Message" cols="30" rows="10" placeholder="Your Message" autocomplete="off"></textarea>
-            <input type="submit" value="Send Message" onclick="sendMail()" class="btn">
-        </form>
+            <textarea name="message" id="Message" cols="30" rows="10" placeholder="Your Message" autocomplete="off"></textarea>
+            <button type="submit" class="btn">Submit Form</button>
+         </form>
       </section>
       <!-- footer design -->
        <footer class="footer">
