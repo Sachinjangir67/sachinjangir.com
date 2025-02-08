@@ -1,53 +1,75 @@
-// toggle icon navbar
+// Toggle icon navbar
 let menuIcon = document.querySelector('#menu-icon');
 let navbar = document.querySelector('.navbar');
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('fa-xmark');
-    navbar.classList.toggle('active')
+if (menuIcon && navbar) {
+    menuIcon.onclick = () => {
+        menuIcon.classList.toggle('fa-xmark');
+        navbar.classList.toggle('active');
+    };
 }
 
-//typed js
-
-//scroll section active link
-
+// Scroll section active link
 let sections = document.querySelectorAll('section');
 let navLinks = document.querySelectorAll('header nav a');
 
 window.onscroll = () => {
-    sections.forEach(sec =>{
-        let top = window.scrollY;
+    let top = window.scrollY;
+
+    sections.forEach(sec => {
         let offset = sec.offsetTop - 150;
         let height = sec.offsetHeight;
         let id = sec.getAttribute('id');
 
-        if(top >= offset && top < offset + height){
-            navLinks.forEach.apply(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-            })
+        if (top >= offset && top < offset + height) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            let activeLink = document.querySelector('header nav a[href*="' + id + '"]');
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         }
-     });
+    });
 
-
-//sticky navbar
+    // Sticky navbar
     let header = document.querySelector('header');
-    header.classList.toggle('sticky', window.scrollY > 100);
+    if (header) {
+        header.classList.toggle('sticky', window.scrollY > 100);
+    }
 
-//remove toggle icon an nav bar
-    menuIcon.classList.remove('fa-xmark');
-    navbar.classList.remove('active');
+    // Remove toggle icon and navbar when scrolling
+    if (menuIcon && navbar) {
+        menuIcon.classList.remove('fa-xmark');
+        navbar.classList.remove('active');
+    }
 };
 
-//scroll reveal
-scrollReveal({
-    distance: '80px',
-    duration: 2000,
-    delay: 200,
-});
+// ScrollReveal initialization
+if (typeof ScrollReveal !== 'undefined') {
+    ScrollReveal({
+        distance: '80px',
+        duration: 2000,
+        delay: 200
+    });
 
-scrollReveal().reveal('.home-content, heading', { origin: 'top' });
-scrollReveal().reveal('.home-img, .services-container, .portfolio-box, .contact form', {origin: 'buttom'});
-scrollReveal().reveal('.home-contect h1, .about-img', {origin: 'left'});
-scrollReveal().reveal('.home-contect p, .about-content', {origin: 'right'});
+    ScrollReveal().reveal('.home-content, .heading', { origin: 'top' });
+    ScrollReveal().reveal('.home-img, .services-container, .portfolio-box, .contact form', { origin: 'bottom' });
+    ScrollReveal().reveal('.home-content h1, .about-img', { origin: 'left' });
+    ScrollReveal().reveal('.home-content p, .about-content', { origin: 'right' });
+} else {
+    console.warn("ScrollReveal library is missing!");
+}
 
+// Typed.js animation
+if (typeof Typed !== 'undefined') {
+    let typed = new Typed('.auto-type', {
+        strings: ["Data Analyst", "Ms Office Expert", "Tally Accountant", "Frontend Developer"],
+        typeSpeed: 150,
+        backSpeed: 150,
+        loop: true
+    });
+} else {
+    console.warn("Typed.js library is missing!");
+}
