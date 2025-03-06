@@ -1,535 +1,175 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// Three.js setup
+const container = document.querySelector('.home-background');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+camera.position.z = 5;
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    border: none;
-    outline: none;
-    scroll-behavior: smooth;
-    font-family: 'poppins', sans-serif;
-}
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(container.clientWidth, container.clientHeight);
+container.appendChild(renderer.domElement);
 
-:root{
-    --bg-color: #191f36;
-    --snd-bg-color: #262B40;
-    --text-color: #fff;
-    --main-color: #59B2f4;
-}
+// Add lights
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
 
-html{
-    font-size: 62.5%;
-    overflow-x: hidden;
-}
-
-body{
-    background: var(--bg-color);
-    color: var(--text-color);
-}
-
-section{
-    min-height: 100vh;
-    padding: 10rem 9% 2rem;
-}
-
-.header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem 9%;
-    background: var(--bg-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
-
-.logo{
-    font-size: 2.5rem;
-    color: var(--text-color);
-    font-weight: 700;
-    cursor: default;
-}
-
-.navbar a {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin-left: 4rem;
-    font-weight: 700;
-}
-
-.navbar a:hover,
-.navbar a.active {
-    color: var(--text-color);
-}
-
-#menu-icon{
-    font-size: 2.5rem;
-    color: var(--text-color);
-    display: none;
-}
-
-.home{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.home-content h3 {
-    font-size: 3.2rem;
-    font-weight: 700;
-}
-
-.home-content h3:nth-of-type(2) {
-    margin-bottom: 2rem;
-}
-
-span{
-    color: var(--main-color);
-}
-
-.home-content h1 {
-    font-size: 5.6rem;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-
-.home-img img{
-    width: 25vw;
-    animation: floatImage 4s ease-in-out infinite;
-    border: 6px solid #262B40;
-     z-index: 3;
-     border-radius: 50%;
-     border-style: groove;
-}
-@keyframes floatImage {
- 0% {
-    transform: translateY(0);
- }   
- 50%{
-    transform: translateY(-2.4rem);
- }
- 100%{
-    transform: translateY(0);
- }
-}
-
-.home-content p {
-    font-size: 1.6rem;
-}
-
-.social-media a{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 4rem;
-    height: 4rem;
-    background: transparent;
-    border: .2rem solid var(--main-color);
-    border-radius: 50%;
-    font-size: 2rem;
-    color: var(--main-color);
-    margin: 3rem 1.5rem 3rem 0;
-    transition: .5s ease;
-}
-
-.social-media a:hover {
-    background: var(--main-color);
-    color: var(--snd-bg-color);
-    box-shadow: 0 0 1rem var(--main-color);
-}
-
-.btn{
-    display: inline-block;
-    padding: 1rem 2.8rem;
-    background: var(--main-color);
-    border-radius: 4rem;
-    box-shadow: 0 0 1rem var(--main-color);
-    font-size: 1.6rem;
-    color: var(--bg-color);
-    letter-spacing: .1rem;
-    font-weight: 600;
-    transition: .5s ease;
-}
-
-.btn:hover {
-    box-shadow: none;
-}
-
-.about {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    background: var(--snd-bg-color);
-}
-
-.about-img img {
-    width: 25vw;
-    border-radius: 5%;
-    border-style:double;
-    border-color: #59B2f4;
-}
-
-.about-content h2 {
-    text-align: left;
-    line-height: 1.2;
-    font-size: 3.2rem;
-    font-weight: 700;
-}
-
-.about-content h3 {
-    font-size: 2.6rem;
-}
-
-.about-content p {
-    font-size: 1.6rem;
-    margin: 2rem 0 3rem;
-}
-
-.services h2 {
-    margin-bottom: 5rem;
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-.services-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.services-container .services-box {
-    flex: 1 1 30rem;
-    background: var(--snd-bg-color);
-    padding: 3rem 2rem 4rem;
-    border-radius: 2rem;
-    text-align: center;
-    border: .2rem solid var(--bg-color);
-    transition: .5s ease;
-}
-
-.services-container .services-box:hover{
-    border-radius: var(--main-color);
-    transform: scale(1.02);
-}
-
-.services-box i {
-    font-size: 7rem;
-    color: var(--main-color);
-}
-
-.services-box h3 {
-    font-size: 2.6rem;
-}
-
-.services-box p {
-    font-size: 1.6rem;
-    margin: 1rem 0 3 rem;
-}
-
-.portfolio {
-    background: var(--snd-bg-color);
-}
-
-.portfolio h2 {
-    margin-bottom: 4rem;
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-.portfolio-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    gap: 2.5rem;
-}
-
-.portfolio-container .portfolio-box{
-    position: relative;
-    border-radius: 2rem;
-    box-shadow: 0 0 1rem var(--bg-color);
-    overflow: hidden;
-    display: flex;
-}
-
-.portfolio-box img {
-    width: 100%;
-    transition: .5s ease;
-    opacity: 0.7;
-}
-
-.portfolio-box:hover img {
-    transform: scale(1.1);
-}
-
-.portfolio-box .portfolio-layer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0,0,0,0.1), var(--main-color));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 0 4rem;
-    transform: translateY(100%);
-    transition: .5s ease;
-}
-
-.portfolio-box:hover .portfolio-layer{
-    transform: translateY(0);
-}
-
-.portfolio-layer h4{
-    font-size: 3rem;
-}
-
-.portfolio-layer p {
-    font-size: 1.6rem;
-    margin: .3rem 0 1rem;
-}
-
-.portfolio-layer a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 5rem;
-    height: 5rem;
-    background: var(--text-color);
-    border-radius: 50%;
-}
-
-.portfolio-layer a i {
-    font-size: 2rem;
-    color: var(--snd-bg-color);
-}
-
-.contact h2 {
-    margin-bottom: 3rem;
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-align: center;
-}
-
-.contact form {
-    max-width: 70rem;
-    margin: 1rem auto;
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.contact form .input-box {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.contact form .input-box input,
-.contact form textarea {
-    width: 100%;
-    padding: 1.5rem;
-    font-size: 1.6rem;
-    color: var(--text-color);
-    background: var(--snd-bg-color);
-    border-radius: .8rem;
-    margin: .7rem 0;
-}
-
-.contact form .input-box input {
-    width: 49%;
-}
-
-.contact form textarea {
-    resize: none;
-}
-
-.contact form .btn {
-    margin-top: 2rem;
-    cursor: pointer;
-}
-
-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 2rem 9%;
-    background: var(--snd-bg-color);
-}
-
-.footer-text{
-    font-size: 1.6rem;
-}
-
-.footer-iconTop{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: .8rem 1rem;
-    background: var(--main-color);
-    border-radius: .8rem;
-    transition: .5s ease;
-}
-
-.footer-iconTop a:hover {
-    box-sizing: 0 0 1rem var(--main-color);
-
-}
-
-.footer-iconTop a i {
-    font-size: 2.4rem;
-    color: var(--snd-bg-color);
-}
-
-@media (max-width: 1200px){
-    html {
-        font-size: 55%;
+// Load 3D model (replace 'models/your-model.gltf' with your actual model path)
+const loader = new THREE.GLTFLoader();
+let model;
+loader.load(
+    'models/your-model.gltf', // Example: a low-poly laptop or portfolio-related object
+    (gltf) => {
+        model = gltf.scene;
+        scene.add(model);
+        model.position.set(0, 0, 0);
+        model.scale.set(1, 1, 1); // Adjust scale as needed
+    },
+    undefined,
+    (error) => {
+        console.error('Error loading model:', error);
     }
+);
+
+// OrbitControls for interactivity
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.screenSpacePanning = false;
+controls.maxPolarAngle = Math.PI / 2;
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
 }
+animate();
 
-@media (max-width: 991px){
-    .header{
-        padding: 2rem 3%;
-    }
+// Handle window resize
+window.addEventListener('resize', () => {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
 
-    section {
-        padding: 10rem 3%;
-    }
+// Toggle icon navbar
+let menuIcon = document.querySelector('#menu-icon');
+let navbar = document.querySelector('.navbar');
 
-    .services {
-        padding: 7rem;
-    }
+menuIcon.onclick = () => {
+    menuIcon.classList.toggle('fa-xmark');
+    navbar.classList.toggle('active');
+};
 
-    .portfolio {
-        padding-bottom: 7rem;
-    }
+// Scroll section active link
+let sections = document.querySelectorAll('section');
+let navLinks = document.querySelectorAll('header nav a');
 
-    .contact {
-        min-height: auto;
-    }
+window.onscroll = () => {
+    sections.forEach(sec => {
+        let top = window.scrollY;
+        let offset = sec.offsetTop - 150;
+        let height = sec.offsetHeight;
+        let id = sec.getAttribute('id');
 
-    .footer {
-        padding: 2rem 3%;
-    }
-}
+        if (top >= offset && top < offset + height) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
+            });
+        }
+    });
 
-@media (max-width: 786px){
+    // Sticky navbar
+    let header = document.querySelector('header');
+    header.classList.toggle('sticky', window.scrollY > 100);
+
+    // Remove toggle icon and navbar when scrolling
+    menuIcon.classList.remove('fa-xmark');
+    navbar.classList.remove('active');
+};
+
+// ScrollReveal animations
+const sr = ScrollReveal({
+    distance: '100px',
+    duration: 2500,
+    delay: 200,
+    reset: true
+});
+
+sr.reveal('.home-content, h2.heading', { origin: 'top' });
+sr.reveal('.home-img', { origin: 'bottom' });
+sr.reveal('.home-content h1', { origin: 'left' });
+sr.reveal('.home-content p', { origin: 'right' });
+sr.reveal('.about-img', { origin: 'left' });
+sr.reveal('.about-content', { origin: 'right' });
+sr.reveal('.services-box', { origin: 'bottom', interval: 300 });
+sr.reveal('.portfolio-box', { origin: 'bottom', interval: 300 });
+sr.reveal('.contact form', { origin: 'bottom' });
+sr.reveal('.footer', { origin: 'bottom' });
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Typed.js for auto-typing effect
+var typed = new Typed(".auto-type", {
+    strings: ["Data Analytics Mastery", "MS Office Expert", "Tally Accountant", "Frontend Developer"],
+    typeSpeed: 150,
+    backSpeed: 150,
+    loop: true
+});
+
+// Add this at the beginning of your script.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize 3D background
+    const background = new Background3D();
     
-    #menu-icon {
-        display: block;
-    }
+    // ... rest of your existing code ...
+});
 
-    .navbar {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 1rem 3%;
-        background: var(--bg-color);
-        border-top: .1rem solid rgba(0,0,0, .2);
-        box-shadow: 0 .5rem 1rem rgba(0,0,0, .2);
-        display: none;
-    }
-    .navbar.active {
-        display: block;
-    }
-
-    .navbar a {
-        display: block;
-        font-size: 2rem;
-        margin: 3rem 0;
-    }
-
-    .home {
-        flex-direction: column;
-    }
-
-    .home-content h3 {
-        font-size: 2.6rem;
-    }
-
-    .home-content h1 {
-        font-size: 5rem;
-    }
-
-    .home-content {
-        order: 2;
-    }
-
-    .home-img img {
-        width: 70vw;
-        margin-top: 4rem;
-    }
-
-    .about {
-        flex-direction: column;
-    }
-
-    .about-img img {
-        width: 90vw;
-        margin-top: 4rem;
-    }
-
-    .services h2 {
-        margin-bottom: 3rem;
-    }
-
-    .portfolio h2 {
-        margin-bottom: 3rem;
-    }
-
-    .portfolio-container{
-        grid-template-columns: repeat(2, 1fr);
-    }
-   
-}
-
-@media (max-width: 617px){
-    .portfolio-container {
-        grid-template-columns: 1fr;
-    }
-
-    .home-img img {
-        width: 80vw;
-        margin-top: 8rem;
-    }
+// View More Dropdown Function
+function toggleMoreCertificates() {
+    const moreCerts = document.getElementById('moreCertificates');
+    const btn = document.querySelector('.view-more-container .btn i');
     
-    .about-img img {
-        width: 100vw;
-        margin-top: 4rem;
+    if (moreCerts.style.display === 'grid') {
+        moreCerts.style.display = 'none';
+        btn.className = 'fa-solid fa-chevron-down';
+    } else {
+        moreCerts.style.display = 'grid';
+        btn.className = 'fa-solid fa-chevron-up';
     }
 }
 
-@media (max-width: 450px) {
-    html {
-        font-size: 50%;
+// Certificate Modal Functions
+function openCertificate(imgSrc) {
+    const modal = document.getElementById('certificateModal');
+    const modalImg = document.getElementById('modalImage');
+    modal.style.display = "flex";
+    modalImg.src = imgSrc;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('certificateModal');
+    modal.style.display = "none";
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside the image
+document.getElementById('certificateModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
     }
-
-    .contact form .input-box input {
-        width: 100%
-    }
-}
-
-#officeimg{
-    height: 70px;
-    width: 70px;
-}
-
-#tallyimg{
-    height: 70px;
-    width: 70px;
-}
-
-
-
+});
