@@ -21,6 +21,7 @@
 html {
     font-size: 62.5%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -34,7 +35,8 @@ section {
     padding: 10rem 9% 2rem;
     background: rgba(25, 31, 54, 0.7);
     backdrop-filter: blur(5px);
-    overflow: hidden;
+    overflow: visible;
+    z-index: 1;
 }
 
 .header {
@@ -177,6 +179,7 @@ span {
 
 .home-content p {
     font-size: 1.6rem;
+    margin: 2rem 0 4rem;
 }
 
 .social-media a {
@@ -261,42 +264,73 @@ span {
 }
 
 .services-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    padding: 2rem 0;
 }
 
-.services-container .services-box {
-    flex: 1 1 30rem;
+.services-box {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
     background: var(--snd-bg-color);
-    padding: 3rem 2rem 4rem;
-    border-radius: 2rem;
-    text-align: center;
     border: .2rem solid var(--bg-color);
-    transition: all 0.3s ease;
+    border-radius: 2rem;
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    transition: all 0.5s ease;
 }
 
-.services-container .services-box:hover {
+.services-box:hover {
     transform: scale(1.02);
     border-color: var(--main-color);
-    box-shadow: 0 0 1rem var(--main-color);
+    box-shadow: 0 0 2rem var(--main-color);
 }
 
-.services-box i {
-    font-size: 7rem;
-    color: var(--main-color);
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    display: block;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    filter: brightness(1) contrast(1);
+}
+
+.services-box:hover .service-icon {
+    transform: scale(1.1);
+    filter: brightness(1.1);
 }
 
 .services-box h3 {
-    font-size: 2.6rem;
-    text-shadow: 0 0 5px rgba(89, 178, 244, 0.5);
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.services-box:hover h3 {
+    color: var(--main-color);
 }
 
 .services-box p {
     font-size: 1.6rem;
-    margin: 1rem 0 3rem;
+    margin: 1rem 0 2rem;
+    flex-grow: 1;
+    transition: all 0.3s ease;
+}
+
+.services-box .btn {
+    margin-top: auto;
+    align-self: center;
+    transition: all 0.3s ease;
+}
+
+.services-box:hover .btn {
+    background: var(--main-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 1.5rem var(--main-color);
+    transform: scale(1.05);
 }
 
 .portfolio {
@@ -387,6 +421,13 @@ span {
     color: var(--snd-bg-color);
 }
 
+.contact {
+    min-height: calc(100vh - 60px);
+    padding-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
 .contact h2 {
     margin-bottom: 3rem;
     font-size: 3.2rem;
@@ -439,36 +480,127 @@ span {
     cursor: pointer;
 }
 
-footer {
+/* Updated Footer styles */
+.footer {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     padding: 2rem 9%;
     background: var(--snd-bg-color);
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    min-height: 80px;
 }
 
 .footer-text {
-    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
+.footer-text p {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* Update language selector styles */
+.language-selector {
+    align-self: flex-start;
+    margin: 0;
+}
+
+.language-selector select {
+    padding: 0.4rem 2rem 0.4rem 0.8rem;
+    font-size: 1.4rem;
+}
+
+/* Updated Footer icon styles */
 .footer-iconTop {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: .8rem 1rem;
+    padding: 0.8rem;
     background: var(--main-color);
-    border-radius: .8rem;
-    transition: .5s ease;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 2rem;
+    right: 9%;
+    box-shadow: 0 0 0.5rem var(--main-color);
 }
 
-.footer-iconTop a:hover {
+.footer-iconTop:hover {
+    transform: scale(1.1) translateY(-2px);
     box-shadow: 0 0 1rem var(--main-color);
 }
 
+.footer-iconTop a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bg-color);
+}
+
 .footer-iconTop a i {
-    font-size: 2.4rem;
-    color: var(--snd-bg-color);
+    font-size: 2rem;
+    color: var(--bg-color);
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .footer {
+        padding: 2rem 3%;
+    }
+
+    .footer-text {
+        width: 100%;
+        gap: 1.5rem;
+    }
+
+    .footer-text p {
+        font-size: 1.2rem;
+    }
+
+    .footer-iconTop {
+        padding: 0.6rem;
+        right: 3%;
+    }
+    
+    .footer-iconTop a i {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .footer-text p {
+        font-size: 1.1rem;
+    }
+
+    .footer-iconTop {
+        padding: 0.5rem;
+    }
+    
+    .footer-iconTop a i {
+        font-size: 1.6rem;
+    }
+}
+
+/* Remove animations that might interfere */
+@keyframes slideIn {
+    from, to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from, to {
+        transform: none;
+        opacity: 1;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -494,12 +626,12 @@ footer {
         padding-bottom: 7rem;
     }
 
-    .contact {
-        min-height: auto;
-    }
-
     .footer {
         padding: 2rem 3%;
+    }
+
+    .footer-iconTop {
+        right: 3%;
     }
 }
 
@@ -552,7 +684,7 @@ footer {
     }
 
     .home-content h1 {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 
     .home-content {
@@ -588,6 +720,19 @@ footer {
     .more-certificates {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .theme-toggle {
+        display: block !important;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(89, 178, 244, 0.1);
+    }
+
+    .theme-toggle i {
+        margin-right: 1rem;
+    }
 }
 
 @media (max-width: 617px) {
@@ -617,6 +762,14 @@ footer {
 
     .contact form .input-box input {
         width: 100%;
+    }
+
+    .footer-iconTop {
+        padding: 0.6rem;
+    }
+    
+    .footer-iconTop a i {
+        font-size: 1.6rem;
     }
 }
 
@@ -733,19 +886,241 @@ footer {
     display: grid;
 }
 
-/* Remove these styles as they're no longer needed */
-.certificate-item {
-    display: none;  /* Remove this style */
+/* Add dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
-.certificate-item:hover {
-    display: none;  /* Remove this style */
+.dark-mode .header, .dark-mode .footer {
+    background-color: #1e1e1e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.certificate-item img {
-    display: none;  /* Remove this style */
+.dark-mode .navbar a {
+    color: #e0e0e0;
 }
 
-.certificate-item h4 {
-    display: none;  /* Remove this style */
+.dark-mode .navbar a:hover,
+.dark-mode .navbar a.active {
+    color: #59B2f4;
+}
+
+/* Additional styles for other sections in dark mode */
+.dark-mode section {
+    background: rgba(38, 43, 64, 0.9);
+}
+
+/* Add styles for the back-to-top button */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 11;
+}
+
+.back-to-top.visible {
+    display: block;
+}
+
+/* Update the dark mode toggle style */
+.theme-toggle {
+    display: none !important;
+    font-size: 1.7rem;
+    color: var(--text-color);
+    transition: .3s;
+    margin: 3rem 0;
+    text-align: center;
+}
+
+/* Show toggle only in mobile menu */
+@media (max-width: 786px) {
+    .theme-toggle {
+        display: block !important;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(89, 178, 244, 0.1);
+    }
+
+    .theme-toggle i {
+        margin-right: 1rem;
+    }
+}
+
+/* Remove the underline effect for the theme toggle */
+.theme-toggle::after {
+    display: none !important;
+}
+
+/* Testimonials section styles */
+.testimonials {
+    background: var(--snd-bg-color);
+    padding: 5rem 9%;
+}
+
+.testimonials h2 {
+    margin-bottom: 4rem;
+    font-size: 3.2rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(89, 178, 244, 0.5);
+}
+
+.testimonials-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.testimonial-box {
+    flex: 1 1 30rem;
+    background: var(--bg-color);
+    padding: 3rem 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: .2rem solid var(--snd-bg-color);
+    transition: all 0.3s ease;
+}
+
+.testimonial-box:hover {
+    transform: scale(1.02);
+    border-color: var(--main-color);
+    box-shadow: 0 0 1rem var(--main-color);
+}
+
+.testimonial-box p {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-box h4 {
+    font-size: 2rem;
+    color: var(--main-color);
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-box span {
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+/* Dark mode styles for testimonials */
+.dark-mode .testimonials {
+    background: #262B40;
+}
+
+.dark-mode .testimonial-box {
+    background: #1e1e1e;
+    border: .2rem solid #59B2f4;
+}
+
+.dark-mode .testimonial-box p {
+    color: #e0e0e0;
+}
+
+.dark-mode .testimonial-box h4 {
+    color: #59B2f4;
+}
+
+/* Updated Language selector styles */
+.language-selector {
+    position: relative;
+    display: inline-block;
+    margin-right: 1.5rem;
+    margin-bottom: 0;
+}
+
+.language-selector select {
+    padding: 0.4rem 2rem 0.4rem 0.8rem;
+    font-size: 1.4rem;
+    background: var(--snd-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--main-color);
+    border-radius: 0.6rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2359B2f4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 0.8rem;
+}
+
+.language-selector select:hover {
+    border-color: var(--main-color);
+    box-shadow: 0 0 0.5rem var(--main-color);
+    transform: translateY(-1px);
+}
+
+.language-selector select option {
+    background: var(--snd-bg-color);
+    color: var(--text-color);
+    padding: 0.4rem;
+    font-size: 1.4rem;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .language-selector select {
+        font-size: 1.3rem;
+        padding: 0.3rem 1.8rem 0.3rem 0.6rem;
+    }
+}
+
+/* Update the auto-type text size */
+.typed-cursor,
+.auto-type {
+    font-size: 3.2rem !important;
+    color: var(--main-color);
+    font-weight: 600;
+}
+
+/* Make it responsive for smaller screens */
+@media (max-width: 768px) {
+    .typed-cursor,
+    .auto-type {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* More services section */
+.more-services {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.more-services.visible {
+    display: grid;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .services-container,
+    .more-services {
+        grid-template-columns: 1fr;
+    }
+
+    .services-box {
+        min-height: 350px;
+    }
+}
+
+/* Remove old icon styles */
+.services-box i {
+    display: none;
 }
