@@ -122,11 +122,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Typed.js for auto-typing effect
+// Update the Typed.js configuration
 var typed = new Typed(".auto-type", {
-    strings: ["Data Analytics Mastery", "MS Office Expert", "Tally Accountant", "Frontend Developer"],
-    typeSpeed: 150,
-    backSpeed: 150,
+    strings: ["Frontend Developer", "Data Analyst", "Ms Office Expert", "Power BI Expert", "Python Developer", "SQL Developer"],
+    typeSpeed: 100,
+    backSpeed: 100,
     loop: true
 });
 
@@ -172,4 +172,32 @@ document.getElementById('certificateModal').addEventListener('click', function(e
     if (e.target === this) {
         closeModal();
     }
+});
+
+// Update the dark mode toggle functionality
+document.getElementById('theme-toggle').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    document.body.classList.toggle('dark-mode');
+    const icon = document.getElementById('darkModeIcon');
+    if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+});
+
+// Add this script to handle the back-to-top button visibility
+window.addEventListener('scroll', function() {
+    const backToTop = document.getElementById('backToTop');
+    if (window.scrollY > 300) {
+        backToTop.classList.add('visible');
+    } else {
+        backToTop.classList.remove('visible');
+    }
+});
+
+document.getElementById('backToTop').addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
